@@ -1,0 +1,35 @@
+
+<div *ngIf="chatMessage">
+    <h2><span jhiTranslate="chatApp.chatMessage.detail.title">Chat Message</span> {{chatMessage.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="chatApp.chatMessage.story">Story</span></dt>
+        <dd>
+            <span>{{chatMessage.story}}</span>
+        </dd>
+        <dt><span jhiTranslate="chatApp.chatMessage.senttime">Senttime</span></dt>
+        <dd>
+            <span>{{chatMessage.senttime | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="chatApp.chatMessage.chat">Chat</span></dt>
+        <dd>
+            <div *ngIf="chatMessage.chatId">
+                <a [routerLink]="['/chat-my-suffix', chatMessage.chatId]">{{chatMessage.chatId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'chat-message-my-suffix/'+ chatMessage.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

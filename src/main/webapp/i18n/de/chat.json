@@ -1,0 +1,23 @@
+{
+    "chatApp": {
+        "chat" : {
+            "home": {
+                "title": "Chats",
+                "createLabel": "Chat erstellen",
+                "createOrEditLabel": "Chat erstellen oder bearbeiten"
+            },
+            "created": "Chat erstellt mit ID {{ param }}",
+            "updated": "Chat aktualisiert mit ID {{ param }}",
+            "deleted": "Chat gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Chat {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Chat"
+            },
+            "creationtime": "Creationtime",
+            "user1": "User 1",
+            "user2": "User 2"
+        }
+    }
+}

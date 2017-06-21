@@ -1,0 +1,24 @@
+{
+    "chatApp": {
+        "chatmessage" : {
+            "home": {
+                "title": "Chatmessages",
+                "createLabel": "Chatmessage erstellen",
+                "createOrEditLabel": "Chatmessage erstellen oder bearbeiten"
+            },
+            "created": "Chatmessage erstellt mit ID {{ param }}",
+            "updated": "Chatmessage aktualisiert mit ID {{ param }}",
+            "deleted": "Chatmessage gelöscht mit ID {{ param }}",
+            "delete": {
+                "question": "Soll Chatmessage {{ id }} wirklich dauerhaft gelöscht werden?"
+            },
+            "detail": {
+                "title": "Chatmessage"
+            },
+            "story": "Story",
+            "senttime": "Senttime",
+            "chat": "Chat",
+            "user": "User"
+        }
+    }
+}

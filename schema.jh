@@ -1,0 +1,21 @@
+entity Chat{
+	creation_time ZonedDateTime
+}
+
+entity ChatMessage{
+	story String,
+    sent_time ZonedDateTime
+}
+
+relationship ManyToOne {
+	ChatMessage{chat} to Chat
+}
+
+
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+// Set an angular suffix
+angularSuffix * with mySuffix

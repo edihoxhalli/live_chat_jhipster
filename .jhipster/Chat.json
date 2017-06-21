@@ -1,0 +1,33 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "user1",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "chat"
+        },
+        {
+            "relationshipName": "user2",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "chat"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "creationtime",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "changelogDate": "20170621201911",
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "entityTableName": "chat",
+    "pagination": "no",
+    "angularJSSuffix": "mySuffix"
+}

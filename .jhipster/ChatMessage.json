@@ -1,0 +1,35 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "chat",
+            "otherEntityName": "chat",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "chatmessage"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "story",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "senttime",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "changelogDate": "20170621201912",
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "entityTableName": "chat_message",
+    "pagination": "no",
+    "angularJSSuffix": "mySuffix"
+}
