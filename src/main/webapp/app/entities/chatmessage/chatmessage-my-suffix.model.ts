@@ -1,6 +1,6 @@
 import { BaseEntity } from './../../shared';
 
-export class ChatmessageMySuffix implements BaseEntity {
+export class ChatMessageMySuffix implements BaseEntity {
     constructor(
         public id?: number,
         public story?: string,

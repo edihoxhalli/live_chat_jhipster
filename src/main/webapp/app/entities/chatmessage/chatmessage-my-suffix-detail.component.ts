@@ -3,22 +3,22 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager  } from 'ng-jhipster';
 
-import { ChatmessageMySuffix } from './chatmessage-my-suffix.model';
-import { ChatmessageMySuffixService } from './chatmessage-my-suffix.service';
+import { ChatMessageMySuffix } from './chatmessage-my-suffix.model';
+import { ChatMessageMySuffixService } from './chatmessage-my-suffix.service';
 
 @Component({
     selector: 'jhi-chatmessage-my-suffix-detail',
     templateUrl: './chatmessage-my-suffix-detail.component.html'
 })
-export class ChatmessageMySuffixDetailComponent implements OnInit, OnDestroy {
+export class ChatMessageMySuffixDetailComponent implements OnInit, OnDestroy {
 
-    chatmessage: ChatmessageMySuffix;
+    chatmessage: ChatMessageMySuffix;
     private subscription: Subscription;
     private eventSubscriber: Subscription;
 
     constructor(
         private eventManager: JhiEventManager,
-        private chatmessageService: ChatmessageMySuffixService,
+        private chatmessageService: ChatMessageMySuffixService,
         private route: ActivatedRoute
     ) {
     }
@@ -27,7 +27,7 @@ export class ChatmessageMySuffixDetailComponent implements OnInit, OnDestroy {
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
-        this.registerChangeInChatmessages();
+        this.registerChangeInChatMessages();
     }
 
     load(id) {
@@ -44,7 +44,7 @@ export class ChatmessageMySuffixDetailComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    registerChangeInChatmessages() {
+    registerChangeInChatMessages() {
         this.eventSubscriber = this.eventManager.subscribe(
             'chatmessageListModification',
             (response) => this.load(this.chatmessage.id)

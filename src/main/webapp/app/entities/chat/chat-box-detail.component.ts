@@ -3,22 +3,23 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager  } from 'ng-jhipster';
 
-import { ChatMessageMySuffix } from './chat-message-my-suffix.model';
-import { ChatMessageMySuffixService } from './chat-message-my-suffix.service';
+import { ChatMySuffix } from './chat-my-suffix.model';
+import { ChatMySuffixService } from './chat-my-suffix.service';
 
 @Component({
-    selector: 'jhi-chat-message-my-suffix-detail',
-    templateUrl: './chat-message-my-suffix-detail.component.html'
+    selector: 'chat-box-detail',
+    templateUrl: './chat-box-detail.component.html',
+    styleUrls: ['./chat-box-detail.component.css']
 })
-export class ChatMessageMySuffixDetailComponent implements OnInit, OnDestroy {
+export class ChatBoxDetail implements OnInit, OnDestroy {
 
-    chatMessage: ChatMessageMySuffix;
+    chat: ChatMySuffix;
     private subscription: Subscription;
     private eventSubscriber: Subscription;
 
     constructor(
         private eventManager: JhiEventManager,
-        private chatMessageService: ChatMessageMySuffixService,
+        private chatService: ChatMySuffixService,
         private route: ActivatedRoute
     ) {
     }
@@ -27,12 +28,12 @@ export class ChatMessageMySuffixDetailComponent implements OnInit, OnDestroy {
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
-        this.registerChangeInChatMessages();
+        this.registerChangeInChats();
     }
 
     load(id) {
-        this.chatMessageService.find(id).subscribe((chatMessage) => {
-            this.chatMessage = chatMessage;
+        this.chatService.find(id).subscribe((chat) => {
+            this.chat = chat;
         });
     }
     previousState() {
@@ -44,10 +45,10 @@ export class ChatMessageMySuffixDetailComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    registerChangeInChatMessages() {
+    registerChangeInChats() {
         this.eventSubscriber = this.eventManager.subscribe(
-            'chatMessageListModification',
-            (response) => this.load(this.chatMessage.id)
+            'chatListModification',
+            (response) => this.load(this.chat.id)
         );
     }
 }

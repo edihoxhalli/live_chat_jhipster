@@ -59,6 +59,22 @@ public class ChatServiceImpl implements ChatService{
             .map(chatMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
+    
+    /**
+     *  Get all the chats of certain user.
+     *
+     *  @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<ChatDTO> findAllByUser() {
+        log.debug("Request to get all Chats");
+        List<Chat> allChatsOfUser = chatRepository.findByUser1IsCurrentUser();
+        allChatsOfUser.addAll(chatRepository.findByUser2IsCurrentUser());
+        return allChatsOfUser.stream()
+            .map(chatMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 
     /**
      *  Get one chat by id.

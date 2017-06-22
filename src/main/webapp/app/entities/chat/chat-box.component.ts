@@ -3,22 +3,24 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
-import { ChatMessageMySuffix } from './chat-message-my-suffix.model';
-import { ChatMessageMySuffixService } from './chat-message-my-suffix.service';
+import { ChatMySuffix } from './chat-my-suffix.model';
+import { ChatMySuffixService } from './chat-my-suffix.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
 @Component({
-    selector: 'jhi-chat-message-my-suffix',
-    templateUrl: './chat-message-my-suffix.component.html'
+    selector: 'chat-box',
+    templateUrl: './chat-box.component.html'
 })
-export class ChatMessageMySuffixComponent implements OnInit, OnDestroy {
-chatMessages: ChatMessageMySuffix[];
+
+// Custom component for chat entity. Shows all chats user has with other users. Creates new chats with specified user. 
+export class ChatBox implements OnInit, OnDestroy {
+chats: ChatMySuffix[];
     currentAccount: any;
     eventSubscriber: Subscription;
 
     constructor(
-        private chatMessageService: ChatMessageMySuffixService,
+        private chatService: ChatMySuffixService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private principal: Principal
@@ -26,9 +28,9 @@ chatMessages: ChatMessageMySuffix[];
     }
 
     loadAll() {
-        this.chatMessageService.query().subscribe(
+        this.chatService.queryByUser().subscribe(
             (res: ResponseWrapper) => {
-                this.chatMessages = res.json;
+                this.chats = res.json;
             },
             (res: ResponseWrapper) => this.onError(res.json)
         );
@@ -38,18 +40,18 @@ chatMessages: ChatMessageMySuffix[];
         this.principal.identity().then((account) => {
             this.currentAccount = account;
         });
-        this.registerChangeInChatMessages();
+        this.registerChangeInChats();
     }
 
     ngOnDestroy() {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    trackId(index: number, item: ChatMessageMySuffix) {
+    trackId(index: number, item: ChatMySuffix) {
         return item.id;
     }
-    registerChangeInChatMessages() {
-        this.eventSubscriber = this.eventManager.subscribe('chatMessageListModification', (response) => this.loadAll());
+    registerChangeInChats() {
+        this.eventSubscriber = this.eventManager.subscribe('chatListModification', (response) => this.loadAll());
     }
 
     private onError(error) {

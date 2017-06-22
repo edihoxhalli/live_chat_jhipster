@@ -1,31 +1,31 @@
 package com.chat.service.mapper;
 
 import com.chat.domain.*;
-import com.chat.service.dto.ChatmessageDTO;
+import com.chat.service.dto.ChatMessageDTO;
 
 import org.mapstruct.*;
 
 /**
- * Mapper for the entity Chatmessage and its DTO ChatmessageDTO.
+ * Mapper for the entity ChatMessage and its DTO ChatMessageDTO.
  */
 @Mapper(componentModel = "spring", uses = {ChatMapper.class, UserMapper.class, })
-public interface ChatmessageMapper extends EntityMapper <ChatmessageDTO, Chatmessage> {
+public interface ChatMessageMapper extends EntityMapper <ChatMessageDTO, ChatMessage> {
 
     @Mapping(source = "chat.id", target = "chatId")
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "user.login", target = "userLogin")
-    ChatmessageDTO toDto(Chatmessage chatmessage); 
+    ChatMessageDTO toDto(ChatMessage chatmessage); 
 
     @Mapping(source = "chatId", target = "chat")
 
     @Mapping(source = "userId", target = "user")
-    Chatmessage toEntity(ChatmessageDTO chatmessageDTO); 
-    default Chatmessage fromId(Long id) {
+    ChatMessage toEntity(ChatMessageDTO chatmessageDTO); 
+    default ChatMessage fromId(Long id) {
         if (id == null) {
             return null;
         }
-        Chatmessage chatmessage = new Chatmessage();
+        ChatMessage chatmessage = new ChatMessage();
         chatmessage.setId(id);
         return chatmessage;
     }

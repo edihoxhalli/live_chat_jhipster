@@ -6,21 +6,21 @@ import { Observable } from 'rxjs/Rx';
 import { JhiDateUtils, JhiDataUtils, JhiEventManager } from 'ng-jhipster';
 import { ChatTestModule } from '../../../test.module';
 import { MockActivatedRoute } from '../../../helpers/mock-route.service';
-import { ChatmessageMySuffixDetailComponent } from '../../../../../../main/webapp/app/entities/chatmessage/chatmessage-my-suffix-detail.component';
-import { ChatmessageMySuffixService } from '../../../../../../main/webapp/app/entities/chatmessage/chatmessage-my-suffix.service';
-import { ChatmessageMySuffix } from '../../../../../../main/webapp/app/entities/chatmessage/chatmessage-my-suffix.model';
+import { ChatMessageMySuffixDetailComponent } from '../../../../../../main/webapp/app/entities/chatmessage/chatmessage-my-suffix-detail.component';
+import { ChatMessageMySuffixService } from '../../../../../../main/webapp/app/entities/chatmessage/chatmessage-my-suffix.service';
+import { ChatMessageMySuffix } from '../../../../../../main/webapp/app/entities/chatmessage/chatmessage-my-suffix.model';
 
 describe('Component Tests', () => {
 
-    describe('ChatmessageMySuffix Management Detail Component', () => {
-        let comp: ChatmessageMySuffixDetailComponent;
-        let fixture: ComponentFixture<ChatmessageMySuffixDetailComponent>;
-        let service: ChatmessageMySuffixService;
+    describe('ChatMessageMySuffix Management Detail Component', () => {
+        let comp: ChatMessageMySuffixDetailComponent;
+        let fixture: ComponentFixture<ChatMessageMySuffixDetailComponent>;
+        let service: ChatMessageMySuffixService;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [ChatTestModule],
-                declarations: [ChatmessageMySuffixDetailComponent],
+                declarations: [ChatMessageMySuffixDetailComponent],
                 providers: [
                     JhiDateUtils,
                     JhiDataUtils,
@@ -29,17 +29,17 @@ describe('Component Tests', () => {
                         provide: ActivatedRoute,
                         useValue: new MockActivatedRoute({id: 123})
                     },
-                    ChatmessageMySuffixService,
+                    ChatMessageMySuffixService,
                     JhiEventManager
                 ]
-            }).overrideTemplate(ChatmessageMySuffixDetailComponent, '')
+            }).overrideTemplate(ChatMessageMySuffixDetailComponent, '')
             .compileComponents();
         }));
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(ChatmessageMySuffixDetailComponent);
+            fixture = TestBed.createComponent(ChatMessageMySuffixDetailComponent);
             comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(ChatmessageMySuffixService);
+            service = fixture.debugElement.injector.get(ChatMessageMySuffixService);
         });
 
 
@@ -47,7 +47,7 @@ describe('Component Tests', () => {
             it('Should call load all on init', () => {
             // GIVEN
 
-            spyOn(service, 'find').and.returnValue(Observable.of(new ChatmessageMySuffix(10)));
+            spyOn(service, 'find').and.returnValue(Observable.of(new ChatMessageMySuffix(10)));
 
             // WHEN
             comp.ngOnInit();

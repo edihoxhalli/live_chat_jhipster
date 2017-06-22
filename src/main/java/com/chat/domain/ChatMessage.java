@@ -9,12 +9,12 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
- * A Chatmessage.
+ * A ChatMessage.
  */
 @Entity
 @Table(name = "chat_message")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Chatmessage implements Serializable {
+public class ChatMessage implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -46,7 +46,7 @@ public class Chatmessage implements Serializable {
         return story;
     }
 
-    public Chatmessage story(String story) {
+    public ChatMessage story(String story) {
         this.story = story;
         return this;
     }
@@ -59,7 +59,7 @@ public class Chatmessage implements Serializable {
         return senttime;
     }
 
-    public Chatmessage senttime(ZonedDateTime senttime) {
+    public ChatMessage senttime(ZonedDateTime senttime) {
         this.senttime = senttime;
         return this;
     }
@@ -72,7 +72,7 @@ public class Chatmessage implements Serializable {
         return chat;
     }
 
-    public Chatmessage chat(Chat chat) {
+    public ChatMessage chat(Chat chat) {
         this.chat = chat;
         return this;
     }
@@ -85,7 +85,7 @@ public class Chatmessage implements Serializable {
         return user;
     }
 
-    public Chatmessage user(User user) {
+    public ChatMessage user(User user) {
         this.user = user;
         return this;
     }
@@ -102,7 +102,7 @@ public class Chatmessage implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Chatmessage chatmessage = (Chatmessage) o;
+        ChatMessage chatmessage = (ChatMessage) o;
         if (chatmessage.getId() == null || getId() == null) {
             return false;
         }
@@ -116,7 +116,7 @@ public class Chatmessage implements Serializable {
 
     @Override
     public String toString() {
-        return "Chatmessage{" +
+        return "ChatMessage{" +
             "id=" + getId() +
             ", story='" + getStory() + "'" +
             ", senttime='" + getSenttime() + "'" +

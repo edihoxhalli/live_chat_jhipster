@@ -3,17 +3,17 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { JhiDateUtils } from 'ng-jhipster';
 
-import { ChatmessageMySuffix } from './chatmessage-my-suffix.model';
+import { ChatMessageMySuffix } from './chatmessage-my-suffix.model';
 import { ResponseWrapper, createRequestOption } from '../../shared';
 
 @Injectable()
-export class ChatmessageMySuffixService {
+export class ChatMessageMySuffixService {
 
     private resourceUrl = 'api/chatmessages';
 
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
-    create(chatmessage: ChatmessageMySuffix): Observable<ChatmessageMySuffix> {
+    create(chatmessage: ChatMessageMySuffix): Observable<ChatMessageMySuffix> {
         const copy = this.convert(chatmessage);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
@@ -22,7 +22,7 @@ export class ChatmessageMySuffixService {
         });
     }
 
-    update(chatmessage: ChatmessageMySuffix): Observable<ChatmessageMySuffix> {
+    update(chatmessage: ChatMessageMySuffix): Observable<ChatMessageMySuffix> {
         const copy = this.convert(chatmessage);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
@@ -31,7 +31,7 @@ export class ChatmessageMySuffixService {
         });
     }
 
-    find(id: number): Observable<ChatmessageMySuffix> {
+    find(id: number): Observable<ChatMessageMySuffix> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
             this.convertItemFromServer(jsonResponse);
@@ -62,8 +62,8 @@ export class ChatmessageMySuffixService {
             .convertDateTimeFromServer(entity.senttime);
     }
 
-    private convert(chatmessage: ChatmessageMySuffix): ChatmessageMySuffix {
-        const copy: ChatmessageMySuffix = Object.assign({}, chatmessage);
+    private convert(chatmessage: ChatMessageMySuffix): ChatMessageMySuffix {
+        const copy: ChatMessageMySuffix = Object.assign({}, chatmessage);
 
         copy.senttime = this.dateUtils.toDate(chatmessage.senttime);
         return copy;

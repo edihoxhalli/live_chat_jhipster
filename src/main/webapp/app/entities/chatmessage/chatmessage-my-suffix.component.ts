@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
-import { ChatmessageMySuffix } from './chatmessage-my-suffix.model';
-import { ChatmessageMySuffixService } from './chatmessage-my-suffix.service';
+import { ChatMessageMySuffix } from './chatmessage-my-suffix.model';
+import { ChatMessageMySuffixService } from './chatmessage-my-suffix.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
@@ -12,13 +12,13 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
     selector: 'jhi-chatmessage-my-suffix',
     templateUrl: './chatmessage-my-suffix.component.html'
 })
-export class ChatmessageMySuffixComponent implements OnInit, OnDestroy {
-chatmessages: ChatmessageMySuffix[];
+export class ChatMessageMySuffixComponent implements OnInit, OnDestroy {
+chatmessages: ChatMessageMySuffix[];
     currentAccount: any;
     eventSubscriber: Subscription;
 
     constructor(
-        private chatmessageService: ChatmessageMySuffixService,
+        private chatmessageService: ChatMessageMySuffixService,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private principal: Principal
@@ -38,17 +38,17 @@ chatmessages: ChatmessageMySuffix[];
         this.principal.identity().then((account) => {
             this.currentAccount = account;
         });
-        this.registerChangeInChatmessages();
+        this.registerChangeInChatMessages();
     }
 
     ngOnDestroy() {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    trackId(index: number, item: ChatmessageMySuffix) {
+    trackId(index: number, item: ChatMessageMySuffix) {
         return item.id;
     }
-    registerChangeInChatmessages() {
+    registerChangeInChatMessages() {
         this.eventSubscriber = this.eventManager.subscribe('chatmessageListModification', (response) => this.loadAll());
     }
 

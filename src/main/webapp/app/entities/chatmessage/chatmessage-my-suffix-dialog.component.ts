@@ -6,9 +6,9 @@ import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { ChatmessageMySuffix } from './chatmessage-my-suffix.model';
-import { ChatmessageMySuffixPopupService } from './chatmessage-my-suffix-popup.service';
-import { ChatmessageMySuffixService } from './chatmessage-my-suffix.service';
+import { ChatMessageMySuffix } from './chatmessage-my-suffix.model';
+import { ChatMessageMySuffixPopupService } from './chatmessage-my-suffix-popup.service';
+import { ChatMessageMySuffixService } from './chatmessage-my-suffix.service';
 import { ChatMySuffix, ChatMySuffixService } from '../chat';
 import { User, UserService } from '../../shared';
 import { ResponseWrapper } from '../../shared';
@@ -17,9 +17,9 @@ import { ResponseWrapper } from '../../shared';
     selector: 'jhi-chatmessage-my-suffix-dialog',
     templateUrl: './chatmessage-my-suffix-dialog.component.html'
 })
-export class ChatmessageMySuffixDialogComponent implements OnInit {
+export class ChatMessageMySuffixDialogComponent implements OnInit {
 
-    chatmessage: ChatmessageMySuffix;
+    chatmessage: ChatMessageMySuffix;
     authorities: any[];
     isSaving: boolean;
 
@@ -30,7 +30,7 @@ export class ChatmessageMySuffixDialogComponent implements OnInit {
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
-        private chatmessageService: ChatmessageMySuffixService,
+        private chatmessageService: ChatMessageMySuffixService,
         private chatService: ChatMySuffixService,
         private userService: UserService,
         private eventManager: JhiEventManager
@@ -61,12 +61,12 @@ export class ChatmessageMySuffixDialogComponent implements OnInit {
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<ChatmessageMySuffix>, isCreated: boolean) {
-        result.subscribe((res: ChatmessageMySuffix) =>
+    private subscribeToSaveResponse(result: Observable<ChatMessageMySuffix>, isCreated: boolean) {
+        result.subscribe((res: ChatMessageMySuffix) =>
             this.onSaveSuccess(res, isCreated), (res: Response) => this.onSaveError(res));
     }
 
-    private onSaveSuccess(result: ChatmessageMySuffix, isCreated: boolean) {
+    private onSaveSuccess(result: ChatMessageMySuffix, isCreated: boolean) {
         this.alertService.success(
             isCreated ? 'chatApp.chatmessage.created'
             : 'chatApp.chatmessage.updated',
@@ -104,24 +104,24 @@ export class ChatmessageMySuffixDialogComponent implements OnInit {
     selector: 'jhi-chatmessage-my-suffix-popup',
     template: ''
 })
-export class ChatmessageMySuffixPopupComponent implements OnInit, OnDestroy {
+export class ChatMessageMySuffixPopupComponent implements OnInit, OnDestroy {
 
     modalRef: NgbModalRef;
     routeSub: any;
 
     constructor(
         private route: ActivatedRoute,
-        private chatmessagePopupService: ChatmessageMySuffixPopupService
+        private chatmessagePopupService: ChatMessageMySuffixPopupService
     ) {}
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
             if ( params['id'] ) {
                 this.modalRef = this.chatmessagePopupService
-                    .open(ChatmessageMySuffixDialogComponent, params['id']);
+                    .open(ChatMessageMySuffixDialogComponent, params['id']);
             } else {
                 this.modalRef = this.chatmessagePopupService
-                    .open(ChatmessageMySuffixDialogComponent);
+                    .open(ChatMessageMySuffixDialogComponent);
             }
         });
     }

@@ -1,10 +1,10 @@
 package com.chat.service.impl;
 
-import com.chat.service.ChatmessageService;
-import com.chat.domain.Chatmessage;
-import com.chat.repository.ChatmessageRepository;
-import com.chat.service.dto.ChatmessageDTO;
-import com.chat.service.mapper.ChatmessageMapper;
+import com.chat.service.ChatMessageService;
+import com.chat.domain.ChatMessage;
+import com.chat.repository.ChatMessageRepository;
+import com.chat.service.dto.ChatMessageDTO;
+import com.chat.service.mapper.ChatMessageMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,19 +15,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Service Implementation for managing Chatmessage.
+ * Service Implementation for managing ChatMessage.
  */
 @Service
 @Transactional
-public class ChatmessageServiceImpl implements ChatmessageService{
+public class ChatMessageServiceImpl implements ChatMessageService{
 
-    private final Logger log = LoggerFactory.getLogger(ChatmessageServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(ChatMessageServiceImpl.class);
 
-    private final ChatmessageRepository chatmessageRepository;
+    private final ChatMessageRepository chatmessageRepository;
 
-    private final ChatmessageMapper chatmessageMapper;
+    private final ChatMessageMapper chatmessageMapper;
 
-    public ChatmessageServiceImpl(ChatmessageRepository chatmessageRepository, ChatmessageMapper chatmessageMapper) {
+    public ChatMessageServiceImpl(ChatMessageRepository chatmessageRepository, ChatMessageMapper chatmessageMapper) {
         this.chatmessageRepository = chatmessageRepository;
         this.chatmessageMapper = chatmessageMapper;
     }
@@ -39,9 +39,9 @@ public class ChatmessageServiceImpl implements ChatmessageService{
      * @return the persisted entity
      */
     @Override
-    public ChatmessageDTO save(ChatmessageDTO chatmessageDTO) {
-        log.debug("Request to save Chatmessage : {}", chatmessageDTO);
-        Chatmessage chatmessage = chatmessageMapper.toEntity(chatmessageDTO);
+    public ChatMessageDTO save(ChatMessageDTO chatmessageDTO) {
+        log.debug("Request to save ChatMessage : {}", chatmessageDTO);
+        ChatMessage chatmessage = chatmessageMapper.toEntity(chatmessageDTO);
         chatmessage = chatmessageRepository.save(chatmessage);
         return chatmessageMapper.toDto(chatmessage);
     }
@@ -53,8 +53,8 @@ public class ChatmessageServiceImpl implements ChatmessageService{
      */
     @Override
     @Transactional(readOnly = true)
-    public List<ChatmessageDTO> findAll() {
-        log.debug("Request to get all Chatmessages");
+    public List<ChatMessageDTO> findAll() {
+        log.debug("Request to get all ChatMessages");
         return chatmessageRepository.findAll().stream()
             .map(chatmessageMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
@@ -68,9 +68,9 @@ public class ChatmessageServiceImpl implements ChatmessageService{
      */
     @Override
     @Transactional(readOnly = true)
-    public ChatmessageDTO findOne(Long id) {
-        log.debug("Request to get Chatmessage : {}", id);
-        Chatmessage chatmessage = chatmessageRepository.findOne(id);
+    public ChatMessageDTO findOne(Long id) {
+        log.debug("Request to get ChatMessage : {}", id);
+        ChatMessage chatmessage = chatmessageRepository.findOne(id);
         return chatmessageMapper.toDto(chatmessage);
     }
 
@@ -81,7 +81,7 @@ public class ChatmessageServiceImpl implements ChatmessageService{
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Chatmessage : {}", id);
+        log.debug("Request to delete ChatMessage : {}", id);
         chatmessageRepository.delete(id);
     }
 }

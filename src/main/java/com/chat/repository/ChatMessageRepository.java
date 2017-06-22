@@ -1,19 +1,19 @@
 package com.chat.repository;
 
-import com.chat.domain.Chatmessage;
+import com.chat.domain.ChatMessage;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 import java.util.List;
 
 /**
- * Spring Data JPA repository for the Chatmessage entity.
+ * Spring Data JPA repository for the ChatMessage entity.
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ChatmessageRepository extends JpaRepository<Chatmessage,Long> {
+public interface ChatMessageRepository extends JpaRepository<ChatMessage,Long> {
 
-    @Query("select chat_message from Chatmessage chat_message where chat_message.user.login = ?#{principal.username}")
-    List<Chatmessage> findByUserIsCurrentUser();
+    @Query("select chat_message from ChatMessage chat_message where chat_message.user.login = ?#{principal.username}")
+    List<ChatMessage> findByUserIsCurrentUser();
     
 }

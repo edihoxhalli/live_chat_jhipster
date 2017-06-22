@@ -2,11 +2,11 @@ package com.chat.web.rest;
 
 import com.chat.ChatApp;
 
-import com.chat.domain.Chatmessage;
-import com.chat.repository.ChatmessageRepository;
-import com.chat.service.ChatmessageService;
-import com.chat.service.dto.ChatmessageDTO;
-import com.chat.service.mapper.ChatmessageMapper;
+import com.chat.domain.ChatMessage;
+import com.chat.repository.ChatMessageRepository;
+import com.chat.service.ChatMessageService;
+import com.chat.service.dto.ChatMessageDTO;
+import com.chat.service.mapper.ChatMessageMapper;
 import com.chat.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -37,13 +37,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Test class for the ChatmessageResource REST controller.
+ * Test class for the ChatMessageResource REST controller.
  *
- * @see ChatmessageResource
+ * @see ChatMessageResource
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ChatApp.class)
-public class ChatmessageResourceIntTest {
+public class ChatMessageResourceIntTest {
 
     private static final String DEFAULT_STORY = "AAAAAAAAAA";
     private static final String UPDATED_STORY = "BBBBBBBBBB";
@@ -52,13 +52,13 @@ public class ChatmessageResourceIntTest {
     private static final ZonedDateTime UPDATED_SENTTIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
     @Autowired
-    private ChatmessageRepository chatmessageRepository;
+    private ChatMessageRepository chatmessageRepository;
 
     @Autowired
-    private ChatmessageMapper chatmessageMapper;
+    private ChatMessageMapper chatmessageMapper;
 
     @Autowired
-    private ChatmessageService chatmessageService;
+    private ChatMessageService chatmessageService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -72,15 +72,15 @@ public class ChatmessageResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    private MockMvc restChatmessageMockMvc;
+    private MockMvc restChatMessageMockMvc;
 
-    private Chatmessage chatmessage;
+    private ChatMessage chatmessage;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        ChatmessageResource chatmessageResource = new ChatmessageResource(chatmessageService);
-        this.restChatmessageMockMvc = MockMvcBuilders.standaloneSetup(chatmessageResource)
+        ChatMessageResource chatmessageResource = new ChatMessageResource(chatmessageService);
+        this.restChatMessageMockMvc = MockMvcBuilders.standaloneSetup(chatmessageResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setMessageConverters(jacksonMessageConverter).build();
@@ -92,8 +92,8 @@ public class ChatmessageResourceIntTest {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Chatmessage createEntity(EntityManager em) {
-        Chatmessage chatmessage = new Chatmessage()
+    public static ChatMessage createEntity(EntityManager em) {
+        ChatMessage chatmessage = new ChatMessage()
             .story(DEFAULT_STORY)
             .senttime(DEFAULT_SENTTIME);
         return chatmessage;
@@ -106,52 +106,52 @@ public class ChatmessageResourceIntTest {
 
     @Test
     @Transactional
-    public void createChatmessage() throws Exception {
+    public void createChatMessage() throws Exception {
         int databaseSizeBeforeCreate = chatmessageRepository.findAll().size();
 
-        // Create the Chatmessage
-        ChatmessageDTO chatmessageDTO = chatmessageMapper.toDto(chatmessage);
-        restChatmessageMockMvc.perform(post("/api/chatmessages")
+        // Create the ChatMessage
+        ChatMessageDTO chatmessageDTO = chatmessageMapper.toDto(chatmessage);
+        restChatMessageMockMvc.perform(post("/api/chatmessages")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(chatmessageDTO)))
             .andExpect(status().isCreated());
 
-        // Validate the Chatmessage in the database
-        List<Chatmessage> chatmessageList = chatmessageRepository.findAll();
+        // Validate the ChatMessage in the database
+        List<ChatMessage> chatmessageList = chatmessageRepository.findAll();
         assertThat(chatmessageList).hasSize(databaseSizeBeforeCreate + 1);
-        Chatmessage testChatmessage = chatmessageList.get(chatmessageList.size() - 1);
-        assertThat(testChatmessage.getStory()).isEqualTo(DEFAULT_STORY);
-        assertThat(testChatmessage.getSenttime()).isEqualTo(DEFAULT_SENTTIME);
+        ChatMessage testChatMessage = chatmessageList.get(chatmessageList.size() - 1);
+        assertThat(testChatMessage.getStory()).isEqualTo(DEFAULT_STORY);
+        assertThat(testChatMessage.getSenttime()).isEqualTo(DEFAULT_SENTTIME);
     }
 
     @Test
     @Transactional
-    public void createChatmessageWithExistingId() throws Exception {
+    public void createChatMessageWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = chatmessageRepository.findAll().size();
 
-        // Create the Chatmessage with an existing ID
+        // Create the ChatMessage with an existing ID
         chatmessage.setId(1L);
-        ChatmessageDTO chatmessageDTO = chatmessageMapper.toDto(chatmessage);
+        ChatMessageDTO chatmessageDTO = chatmessageMapper.toDto(chatmessage);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restChatmessageMockMvc.perform(post("/api/chatmessages")
+        restChatMessageMockMvc.perform(post("/api/chatmessages")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(chatmessageDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Alice in the database
-        List<Chatmessage> chatmessageList = chatmessageRepository.findAll();
+        List<ChatMessage> chatmessageList = chatmessageRepository.findAll();
         assertThat(chatmessageList).hasSize(databaseSizeBeforeCreate);
     }
 
     @Test
     @Transactional
-    public void getAllChatmessages() throws Exception {
+    public void getAllChatMessages() throws Exception {
         // Initialize the database
         chatmessageRepository.saveAndFlush(chatmessage);
 
         // Get all the chatmessageList
-        restChatmessageMockMvc.perform(get("/api/chatmessages?sort=id,desc"))
+        restChatMessageMockMvc.perform(get("/api/chatmessages?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(chatmessage.getId().intValue())))
@@ -161,12 +161,12 @@ public class ChatmessageResourceIntTest {
 
     @Test
     @Transactional
-    public void getChatmessage() throws Exception {
+    public void getChatMessage() throws Exception {
         // Initialize the database
         chatmessageRepository.saveAndFlush(chatmessage);
 
         // Get the chatmessage
-        restChatmessageMockMvc.perform(get("/api/chatmessages/{id}", chatmessage.getId()))
+        restChatMessageMockMvc.perform(get("/api/chatmessages/{id}", chatmessage.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(chatmessage.getId().intValue()))
@@ -176,82 +176,82 @@ public class ChatmessageResourceIntTest {
 
     @Test
     @Transactional
-    public void getNonExistingChatmessage() throws Exception {
+    public void getNonExistingChatMessage() throws Exception {
         // Get the chatmessage
-        restChatmessageMockMvc.perform(get("/api/chatmessages/{id}", Long.MAX_VALUE))
+        restChatMessageMockMvc.perform(get("/api/chatmessages/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
     }
 
     @Test
     @Transactional
-    public void updateChatmessage() throws Exception {
+    public void updateChatMessage() throws Exception {
         // Initialize the database
         chatmessageRepository.saveAndFlush(chatmessage);
         int databaseSizeBeforeUpdate = chatmessageRepository.findAll().size();
 
         // Update the chatmessage
-        Chatmessage updatedChatmessage = chatmessageRepository.findOne(chatmessage.getId());
-        updatedChatmessage
+        ChatMessage updatedChatMessage = chatmessageRepository.findOne(chatmessage.getId());
+        updatedChatMessage
             .story(UPDATED_STORY)
             .senttime(UPDATED_SENTTIME);
-        ChatmessageDTO chatmessageDTO = chatmessageMapper.toDto(updatedChatmessage);
+        ChatMessageDTO chatmessageDTO = chatmessageMapper.toDto(updatedChatMessage);
 
-        restChatmessageMockMvc.perform(put("/api/chatmessages")
+        restChatMessageMockMvc.perform(put("/api/chatmessages")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(chatmessageDTO)))
             .andExpect(status().isOk());
 
-        // Validate the Chatmessage in the database
-        List<Chatmessage> chatmessageList = chatmessageRepository.findAll();
+        // Validate the ChatMessage in the database
+        List<ChatMessage> chatmessageList = chatmessageRepository.findAll();
         assertThat(chatmessageList).hasSize(databaseSizeBeforeUpdate);
-        Chatmessage testChatmessage = chatmessageList.get(chatmessageList.size() - 1);
-        assertThat(testChatmessage.getStory()).isEqualTo(UPDATED_STORY);
-        assertThat(testChatmessage.getSenttime()).isEqualTo(UPDATED_SENTTIME);
+        ChatMessage testChatMessage = chatmessageList.get(chatmessageList.size() - 1);
+        assertThat(testChatMessage.getStory()).isEqualTo(UPDATED_STORY);
+        assertThat(testChatMessage.getSenttime()).isEqualTo(UPDATED_SENTTIME);
     }
 
     @Test
     @Transactional
-    public void updateNonExistingChatmessage() throws Exception {
+    public void updateNonExistingChatMessage() throws Exception {
         int databaseSizeBeforeUpdate = chatmessageRepository.findAll().size();
 
-        // Create the Chatmessage
-        ChatmessageDTO chatmessageDTO = chatmessageMapper.toDto(chatmessage);
+        // Create the ChatMessage
+        ChatMessageDTO chatmessageDTO = chatmessageMapper.toDto(chatmessage);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
-        restChatmessageMockMvc.perform(put("/api/chatmessages")
+        restChatMessageMockMvc.perform(put("/api/chatmessages")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(chatmessageDTO)))
             .andExpect(status().isCreated());
 
-        // Validate the Chatmessage in the database
-        List<Chatmessage> chatmessageList = chatmessageRepository.findAll();
+        // Validate the ChatMessage in the database
+        List<ChatMessage> chatmessageList = chatmessageRepository.findAll();
         assertThat(chatmessageList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
     @Test
     @Transactional
-    public void deleteChatmessage() throws Exception {
+    public void deleteChatMessage() throws Exception {
         // Initialize the database
         chatmessageRepository.saveAndFlush(chatmessage);
         int databaseSizeBeforeDelete = chatmessageRepository.findAll().size();
 
         // Get the chatmessage
-        restChatmessageMockMvc.perform(delete("/api/chatmessages/{id}", chatmessage.getId())
+        restChatMessageMockMvc.perform(delete("/api/chatmessages/{id}", chatmessage.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
         // Validate the database is empty
-        List<Chatmessage> chatmessageList = chatmessageRepository.findAll();
+        List<ChatMessage> chatmessageList = chatmessageRepository.findAll();
         assertThat(chatmessageList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
     @Test
     @Transactional
     public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(Chatmessage.class);
-        Chatmessage chatmessage1 = new Chatmessage();
+        TestUtil.equalsVerifier(ChatMessage.class);
+        ChatMessage chatmessage1 = new ChatMessage();
         chatmessage1.setId(1L);
-        Chatmessage chatmessage2 = new Chatmessage();
+        ChatMessage chatmessage2 = new ChatMessage();
         chatmessage2.setId(chatmessage1.getId());
         assertThat(chatmessage1).isEqualTo(chatmessage2);
         chatmessage2.setId(2L);
@@ -263,10 +263,10 @@ public class ChatmessageResourceIntTest {
     @Test
     @Transactional
     public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(ChatmessageDTO.class);
-        ChatmessageDTO chatmessageDTO1 = new ChatmessageDTO();
+        TestUtil.equalsVerifier(ChatMessageDTO.class);
+        ChatMessageDTO chatmessageDTO1 = new ChatMessageDTO();
         chatmessageDTO1.setId(1L);
-        ChatmessageDTO chatmessageDTO2 = new ChatmessageDTO();
+        ChatMessageDTO chatmessageDTO2 = new ChatMessageDTO();
         assertThat(chatmessageDTO1).isNotEqualTo(chatmessageDTO2);
         chatmessageDTO2.setId(chatmessageDTO1.getId());
         assertThat(chatmessageDTO1).isEqualTo(chatmessageDTO2);

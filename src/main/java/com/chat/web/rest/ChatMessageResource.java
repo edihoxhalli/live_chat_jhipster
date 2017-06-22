@@ -1,9 +1,10 @@
 package com.chat.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.chat.service.ChatmessageService;
+import com.chat.service.ChatMessageService;
 import com.chat.web.rest.util.HeaderUtil;
-import com.chat.service.dto.ChatmessageDTO;
+import com.chat.service.dto.ChatMessageDTO;
+import com.chat.service.dto.ChatMessageDTO;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,19 +18,19 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * REST controller for managing Chatmessage.
+ * REST controller for managing ChatMessage.
  */
 @RestController
 @RequestMapping("/api")
-public class ChatmessageResource {
+public class ChatMessageResource {
 
-    private final Logger log = LoggerFactory.getLogger(ChatmessageResource.class);
+    private final Logger log = LoggerFactory.getLogger(ChatMessageResource.class);
 
     private static final String ENTITY_NAME = "chatmessage";
 
-    private final ChatmessageService chatmessageService;
+    private final ChatMessageService chatmessageService;
 
-    public ChatmessageResource(ChatmessageService chatmessageService) {
+    public ChatMessageResource(ChatMessageService chatmessageService) {
         this.chatmessageService = chatmessageService;
     }
 
@@ -42,12 +43,12 @@ public class ChatmessageResource {
      */
     @PostMapping("/chatmessages")
     @Timed
-    public ResponseEntity<ChatmessageDTO> createChatmessage(@RequestBody ChatmessageDTO chatmessageDTO) throws URISyntaxException {
-        log.debug("REST request to save Chatmessage : {}", chatmessageDTO);
+    public ResponseEntity<ChatMessageDTO> createChatMessage(@RequestBody ChatMessageDTO chatmessageDTO) throws URISyntaxException {
+        log.debug("REST request to save ChatMessage : {}", chatmessageDTO);
         if (chatmessageDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new chatmessage cannot already have an ID")).body(null);
         }
-        ChatmessageDTO result = chatmessageService.save(chatmessageDTO);
+        ChatMessageDTO result = chatmessageService.save(chatmessageDTO);
         return ResponseEntity.created(new URI("/api/chatmessages/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -64,12 +65,12 @@ public class ChatmessageResource {
      */
     @PutMapping("/chatmessages")
     @Timed
-    public ResponseEntity<ChatmessageDTO> updateChatmessage(@RequestBody ChatmessageDTO chatmessageDTO) throws URISyntaxException {
-        log.debug("REST request to update Chatmessage : {}", chatmessageDTO);
+    public ResponseEntity<ChatMessageDTO> updateChatMessage(@RequestBody ChatMessageDTO chatmessageDTO) throws URISyntaxException {
+        log.debug("REST request to update ChatMessage : {}", chatmessageDTO);
         if (chatmessageDTO.getId() == null) {
-            return createChatmessage(chatmessageDTO);
+            return createChatMessage(chatmessageDTO);
         }
-        ChatmessageDTO result = chatmessageService.save(chatmessageDTO);
+        ChatMessageDTO result = chatmessageService.save(chatmessageDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, chatmessageDTO.getId().toString()))
             .body(result);
@@ -82,8 +83,8 @@ public class ChatmessageResource {
      */
     @GetMapping("/chatmessages")
     @Timed
-    public List<ChatmessageDTO> getAllChatmessages() {
-        log.debug("REST request to get all Chatmessages");
+    public List<ChatMessageDTO> getAllChatMessages() {
+        log.debug("REST request to get all ChatMessages");
         return chatmessageService.findAll();
     }
 
@@ -95,9 +96,9 @@ public class ChatmessageResource {
      */
     @GetMapping("/chatmessages/{id}")
     @Timed
-    public ResponseEntity<ChatmessageDTO> getChatmessage(@PathVariable Long id) {
-        log.debug("REST request to get Chatmessage : {}", id);
-        ChatmessageDTO chatmessageDTO = chatmessageService.findOne(id);
+    public ResponseEntity<ChatMessageDTO> getChatMessage(@PathVariable Long id) {
+        log.debug("REST request to get ChatMessage : {}", id);
+        ChatMessageDTO chatmessageDTO = chatmessageService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(chatmessageDTO));
     }
 
@@ -109,8 +110,8 @@ public class ChatmessageResource {
      */
     @DeleteMapping("/chatmessages/{id}")
     @Timed
-    public ResponseEntity<Void> deleteChatmessage(@PathVariable Long id) {
-        log.debug("REST request to delete Chatmessage : {}", id);
+    public ResponseEntity<Void> deleteChatMessage(@PathVariable Long id) {
+        log.debug("REST request to delete ChatMessage : {}", id);
         chatmessageService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }

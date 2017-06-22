@@ -3,6 +3,8 @@ package com.chat.service;
 import com.chat.service.dto.ChatDTO;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 /**
  * Service Interface for managing Chat.
  */
@@ -23,6 +25,13 @@ public interface ChatService {
      */
     List<ChatDTO> findAll();
 
+    /**
+     *  Get all the chats of certain user.
+     *
+     *  @return the list of entities
+     */
+    List<ChatDTO> findAllByUser();
+    
     /**
      *  Get the "id" chat.
      *

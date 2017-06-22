@@ -1,12 +1,12 @@
 package com.chat.service;
 
-import com.chat.service.dto.ChatmessageDTO;
+import com.chat.service.dto.ChatMessageDTO;
 import java.util.List;
 
 /**
- * Service Interface for managing Chatmessage.
+ * Service Interface for managing ChatMessage.
  */
-public interface ChatmessageService {
+public interface ChatMessageService {
 
     /**
      * Save a chatmessage.
@@ -14,14 +14,14 @@ public interface ChatmessageService {
      * @param chatmessageDTO the entity to save
      * @return the persisted entity
      */
-    ChatmessageDTO save(ChatmessageDTO chatmessageDTO);
+    ChatMessageDTO save(ChatMessageDTO chatmessageDTO);
 
     /**
      *  Get all the chatmessages.
      *
      *  @return the list of entities
      */
-    List<ChatmessageDTO> findAll();
+    List<ChatMessageDTO> findAll();
 
     /**
      *  Get the "id" chatmessage.
@@ -29,7 +29,7 @@ public interface ChatmessageService {
      *  @param id the id of the entity
      *  @return the entity
      */
-    ChatmessageDTO findOne(Long id);
+    ChatMessageDTO findOne(Long id);
 
     /**
      *  Delete the "id" chatmessage.

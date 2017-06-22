@@ -8,9 +8,9 @@ import java.util.Set;
 import java.util.Objects;
 
 /**
- * A DTO for the Chatmessage entity.
+ * A DTO for the ChatMessage entity.
  */
-public class ChatmessageDTO implements Serializable {
+public class ChatMessageDTO implements Serializable {
 
     private Long id;
 
@@ -81,7 +81,7 @@ public class ChatmessageDTO implements Serializable {
             return false;
         }
 
-        ChatmessageDTO chatmessageDTO = (ChatmessageDTO) o;
+        ChatMessageDTO chatmessageDTO = (ChatMessageDTO) o;
         if(chatmessageDTO.getId() == null || getId() == null) {
             return false;
         }
@@ -95,7 +95,7 @@ public class ChatmessageDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "ChatmessageDTO{" +
+        return "ChatMessageDTO{" +
             "id=" + getId() +
             ", story='" + getStory() + "'" +
             ", senttime='" + getSenttime() + "'" +

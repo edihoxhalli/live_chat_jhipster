@@ -4,20 +4,20 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 
-import { ChatmessageMySuffix } from './chatmessage-my-suffix.model';
-import { ChatmessageMySuffixPopupService } from './chatmessage-my-suffix-popup.service';
-import { ChatmessageMySuffixService } from './chatmessage-my-suffix.service';
+import { ChatMessageMySuffix } from './chatmessage-my-suffix.model';
+import { ChatMessageMySuffixPopupService } from './chatmessage-my-suffix-popup.service';
+import { ChatMessageMySuffixService } from './chatmessage-my-suffix.service';
 
 @Component({
     selector: 'jhi-chatmessage-my-suffix-delete-dialog',
     templateUrl: './chatmessage-my-suffix-delete-dialog.component.html'
 })
-export class ChatmessageMySuffixDeleteDialogComponent {
+export class ChatMessageMySuffixDeleteDialogComponent {
 
-    chatmessage: ChatmessageMySuffix;
+    chatmessage: ChatMessageMySuffix;
 
     constructor(
-        private chatmessageService: ChatmessageMySuffixService,
+        private chatmessageService: ChatMessageMySuffixService,
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private eventManager: JhiEventManager
@@ -44,20 +44,20 @@ export class ChatmessageMySuffixDeleteDialogComponent {
     selector: 'jhi-chatmessage-my-suffix-delete-popup',
     template: ''
 })
-export class ChatmessageMySuffixDeletePopupComponent implements OnInit, OnDestroy {
+export class ChatMessageMySuffixDeletePopupComponent implements OnInit, OnDestroy {
 
     modalRef: NgbModalRef;
     routeSub: any;
 
     constructor(
         private route: ActivatedRoute,
-        private chatmessagePopupService: ChatmessageMySuffixPopupService
+        private chatmessagePopupService: ChatMessageMySuffixPopupService
     ) {}
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
             this.modalRef = this.chatmessagePopupService
-                .open(ChatmessageMySuffixDeleteDialogComponent, params['id']);
+                .open(ChatMessageMySuffixDeleteDialogComponent, params['id']);
         });
     }
 

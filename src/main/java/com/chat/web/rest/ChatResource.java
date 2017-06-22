@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +46,9 @@ public class ChatResource {
         log.debug("REST request to save Chat : {}", chatDTO);
         if (chatDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new chat cannot already have an ID")).body(null);
+        }
+        if(chatDTO.getCreationtime() == null){
+        	chatDTO.setCreationtime(ZonedDateTime.now());
         }
         ChatDTO result = chatService.save(chatDTO);
         return ResponseEntity.created(new URI("/api/chats/" + result.getId()))
@@ -85,6 +88,18 @@ public class ChatResource {
     public List<ChatDTO> getAllChats() {
         log.debug("REST request to get all Chats");
         return chatService.findAll();
+    }
+    
+    /**
+     * GET  /chats : get all the chats.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of chats in body
+     */
+    @GetMapping("/chats-user")
+    @Timed
+    public List<ChatDTO> getAllChatsByUser() {
+        log.debug("REST request to get all Chats");
+        return chatService.findAllByUser();
     }
 
     /**

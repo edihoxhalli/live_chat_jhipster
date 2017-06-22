@@ -4,14 +4,14 @@ import { RouterModule } from '@angular/router';
 import { ChatSharedModule } from '../../shared';
 import { ChatAdminModule } from '../../admin/admin.module';
 import {
-    ChatmessageMySuffixService,
-    ChatmessageMySuffixPopupService,
-    ChatmessageMySuffixComponent,
-    ChatmessageMySuffixDetailComponent,
-    ChatmessageMySuffixDialogComponent,
-    ChatmessageMySuffixPopupComponent,
-    ChatmessageMySuffixDeletePopupComponent,
-    ChatmessageMySuffixDeleteDialogComponent,
+    ChatMessageMySuffixService,
+    ChatMessageMySuffixPopupService,
+    ChatMessageMySuffixComponent,
+    ChatMessageMySuffixDetailComponent,
+    ChatMessageMySuffixDialogComponent,
+    ChatMessageMySuffixPopupComponent,
+    ChatMessageMySuffixDeletePopupComponent,
+    ChatMessageMySuffixDeleteDialogComponent,
     chatmessageRoute,
     chatmessagePopupRoute,
 } from './';
@@ -28,24 +28,24 @@ const ENTITY_STATES = [
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
-        ChatmessageMySuffixComponent,
-        ChatmessageMySuffixDetailComponent,
-        ChatmessageMySuffixDialogComponent,
-        ChatmessageMySuffixDeleteDialogComponent,
-        ChatmessageMySuffixPopupComponent,
-        ChatmessageMySuffixDeletePopupComponent,
+        ChatMessageMySuffixComponent,
+        ChatMessageMySuffixDetailComponent,
+        ChatMessageMySuffixDialogComponent,
+        ChatMessageMySuffixDeleteDialogComponent,
+        ChatMessageMySuffixPopupComponent,
+        ChatMessageMySuffixDeletePopupComponent,
     ],
     entryComponents: [
-        ChatmessageMySuffixComponent,
-        ChatmessageMySuffixDialogComponent,
-        ChatmessageMySuffixPopupComponent,
-        ChatmessageMySuffixDeleteDialogComponent,
-        ChatmessageMySuffixDeletePopupComponent,
+        ChatMessageMySuffixComponent,
+        ChatMessageMySuffixDialogComponent,
+        ChatMessageMySuffixPopupComponent,
+        ChatMessageMySuffixDeleteDialogComponent,
+        ChatMessageMySuffixDeletePopupComponent,
     ],
     providers: [
-        ChatmessageMySuffixService,
-        ChatmessageMySuffixPopupService,
+        ChatMessageMySuffixService,
+        ChatMessageMySuffixPopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ChatChatmessageMySuffixModule {}
+export class ChatChatMessageMySuffixModule {}

@@ -1,0 +1,81 @@
+
+<div *ngIf="chat">
+    <h2><span jhiTranslate="chatApp.chat.detail.title">Chat</span> {{chat.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <!--
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="chatApp.chat.creationtime">Creationtime</span></dt>
+        <dd>
+            <span>{{chat.creationtime | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="chatApp.chat.user1">User 1</span></dt>
+        <dd>
+            {{chat.user1Login}}
+        </dd>
+        <dt><span jhiTranslate="chatApp.chat.user2">User 2</span></dt>
+        <dd>
+            {{chat.user2Login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'chat-my-suffix/'+ chat.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>-->
+    <div id="message_box">
+        <p>How do you do?</p>
+        <p>Fine, how are you?</p>
+        <p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p><p>How do you do?</p>
+        <p>Fine, how are you?</p>
+    </div>
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'chat-my-suffix/'+ chat.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Send</span>
+    </button>
+</div>

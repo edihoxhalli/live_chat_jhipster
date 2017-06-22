@@ -2,17 +2,17 @@ import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
-import { ChatmessageMySuffix } from './chatmessage-my-suffix.model';
-import { ChatmessageMySuffixService } from './chatmessage-my-suffix.service';
+import { ChatMessageMySuffix } from './chatmessage-my-suffix.model';
+import { ChatMessageMySuffixService } from './chatmessage-my-suffix.service';
 
 @Injectable()
-export class ChatmessageMySuffixPopupService {
+export class ChatMessageMySuffixPopupService {
     private isOpen = false;
     constructor(
         private datePipe: DatePipe,
         private modalService: NgbModal,
         private router: Router,
-        private chatmessageService: ChatmessageMySuffixService
+        private chatmessageService: ChatMessageMySuffixService
 
     ) {}
 
@@ -29,11 +29,11 @@ export class ChatmessageMySuffixPopupService {
                 this.chatmessageModalRef(component, chatmessage);
             });
         } else {
-            return this.chatmessageModalRef(component, new ChatmessageMySuffix());
+            return this.chatmessageModalRef(component, new ChatMessageMySuffix());
         }
     }
 
-    chatmessageModalRef(component: Component, chatmessage: ChatmessageMySuffix): NgbModalRef {
+    chatmessageModalRef(component: Component, chatmessage: ChatMessageMySuffix): NgbModalRef {
         const modalRef = this.modalService.open(component, { size: 'lg', backdrop: 'static'});
         modalRef.componentInstance.chatmessage = chatmessage;
         modalRef.result.then((result) => {

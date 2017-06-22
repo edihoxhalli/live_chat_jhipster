@@ -14,11 +14,16 @@ import {
     ChatMySuffixDeleteDialogComponent,
     chatRoute,
     chatPopupRoute,
+    chatBoxRoute,
+    // importing custom component for chat entity
+    ChatBox,
+    ChatBoxDetail
 } from './';
 
 const ENTITY_STATES = [
     ...chatRoute,
     ...chatPopupRoute,
+    ...chatBoxRoute
 ];
 
 @NgModule({
@@ -34,6 +39,8 @@ const ENTITY_STATES = [
         ChatMySuffixDeleteDialogComponent,
         ChatMySuffixPopupComponent,
         ChatMySuffixDeletePopupComponent,
+        ChatBox,
+        ChatBoxDetail
     ],
     entryComponents: [
         ChatMySuffixComponent,

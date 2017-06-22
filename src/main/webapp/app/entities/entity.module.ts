@@ -1,15 +1,15 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { ChatChatMySuffixModule } from './chat/chat-my-suffix.module';
-import { ChatChatMessageMySuffixModule } from './chat-message/chat-message-my-suffix.module';
-import { ChatChatmessageMySuffixModule } from './chatmessage/chatmessage-my-suffix.module';
+// import { ChatChatMessageMySuffixModule } from './chat-message/chat-message-my-suffix.module';
+import { ChatChatMessageMySuffixModule } from './chatmessage/chatmessage-my-suffix.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
     imports: [
         ChatChatMySuffixModule,
+        // ChatChatMessageMySuffixModule,
         ChatChatMessageMySuffixModule,
-        ChatChatmessageMySuffixModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

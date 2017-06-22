@@ -1,0 +1,64 @@
+<div>
+    <h2>
+        <span jhiTranslate="chatApp.chat.home.title">Chats</span>
+        <button class="btn btn-primary float-right create-chat-my-suffix" [routerLink]="['/', { outlets: { popup: ['chat-my-suffix-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="chatApp.chat.home.createLabel">
+            Create new Chat
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="chats">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="chatApp.chat.creationtime">Creationtime</span></th>
+            <th><span jhiTranslate="chatApp.chat.user1">User 1</span></th>
+            <th><span jhiTranslate="chatApp.chat.user2">User 2</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let chat of chats ;trackBy: trackId">
+                <td><a [routerLink]="['../chat-my-suffix', chat.id ]">{{chat.id}}</a></td>
+                <td>{{chat.creationtime | date:'medium'}}</td>
+                <td>
+                    {{chat.user1Login}}
+                </td>
+                <td>
+                    {{chat.user2Login}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../chat-box', chat.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">Open Chat</span>
+                        </button>
+                        <!--<button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'chat-my-suffix/'+ chat.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'chat-my-suffix/'+ chat.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>-->
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
