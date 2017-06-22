@@ -5,13 +5,21 @@ import { JhiEventManager  } from 'ng-jhipster';
 
 import { ChatMySuffix } from './chat-my-suffix.model';
 import { ChatMySuffixService } from './chat-my-suffix.service';
+import {AfterViewInit} from '@angular/core';    
+import {ElementRef, ViewChild} from '@angular/core';
+
+
 
 @Component({
     selector: 'chat-box-detail',
     templateUrl: './chat-box-detail.component.html',
     styleUrls: ['./chat-box-detail.component.css']
 })
-export class ChatBoxDetail implements OnInit, OnDestroy {
+export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
+
+    @ViewChild('messageBox') message_box:ElementRef;
+    
+    @ViewChild('myname') myname:ElementRef
 
     chat: ChatMySuffix;
     private subscription: Subscription;
@@ -24,10 +32,22 @@ export class ChatBoxDetail implements OnInit, OnDestroy {
     ) {
     }
 
+    ngAfterViewInit() {
+       //Copy in all the js code from the script.js. Typescript will complain but it works just fine
+       //document.getElementById('message_box');
+       console.log(this.myname);
+        console.log(this.message_box);
+        console.log(this.message_box.nativeElement);
+        this.message_box.nativeElement.scrollTop =this.message_box.nativeElement.scrollHeight ;
+    }
+
     ngOnInit() {
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
+        
+        
+
         this.registerChangeInChats();
     }
 
