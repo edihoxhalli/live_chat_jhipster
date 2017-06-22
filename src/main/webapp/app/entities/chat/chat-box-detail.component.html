@@ -32,7 +32,7 @@
         <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
     </button>-->
     <input #myname value="works!"/>
-    <div  id="message_box" #messageBox>
+    <div  id="messageBox" #messageBox class="messageBox">
         <p>How do you do?</p>
         <p>Fine, how are you?</p>
         <p>How do you do?</p>
@@ -73,10 +73,10 @@
         <p>Fine, how are you?</p><p>How do you do?</p>
         <p>Fine, how are you?</p>
     </div>
+    <input type="text" placeholder="Enter message..." class="form-control" id="message" [(ngModel)]="currentMessage" />
     <button type="button"
-            [routerLink]="['/', { outlets: { popup: 'chat-my-suffix/'+ chat.id + '/edit'} }]"
-            replaceUrl="true"
+            (click) = "sendMessage();"
             class="btn btn-primary">
-        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Send</span>
+        <span class="fa fa-pencil"></span>&nbsp;<span> Send</span>
     </button>
 </div>

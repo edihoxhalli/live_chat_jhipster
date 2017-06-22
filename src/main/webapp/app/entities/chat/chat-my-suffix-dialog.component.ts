@@ -10,8 +10,7 @@ import { ChatMySuffix } from './chat-my-suffix.model';
 import { ChatMySuffixPopupService } from './chat-my-suffix-popup.service';
 import { ChatMySuffixService } from './chat-my-suffix.service';
 import { User, UserService } from '../../shared';
-import { ResponseWrapper } from '../../shared';
-
+import { Principal, ResponseWrapper } from '../../shared';
 @Component({
     selector: 'jhi-chat-my-suffix-dialog',
     templateUrl: './chat-my-suffix-dialog.component.html'
@@ -23,13 +22,14 @@ export class ChatMySuffixDialogComponent implements OnInit {
     isSaving: boolean;
 
     users: User[];
-
+    currentAccount: any;
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private chatService: ChatMySuffixService,
         private userService: UserService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private principal: Principal
     ) {
     }
 
@@ -37,7 +37,20 @@ export class ChatMySuffixDialogComponent implements OnInit {
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.userService.query()
-            .subscribe((res: ResponseWrapper) => { this.users = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: ResponseWrapper) => { 
+                this.principal.identity().then((account) => {
+                    this.currentAccount = account;
+                    this.users = res.json;
+                    let index = 0;
+                    for(index;index<this.users.length;index++){
+                        if(this.currentAccount.login == this.users[index].login){
+                            break;
+                        }
+                    }
+                    this.users.splice(index, 1); 
+                });
+                
+            }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {

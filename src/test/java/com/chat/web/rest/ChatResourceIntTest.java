@@ -76,7 +76,7 @@ public class ChatResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        ChatResource chatResource = new ChatResource(chatService);
+        ChatResource chatResource = new ChatResource(chatService, null);
         this.restChatMockMvc = MockMvcBuilders.standaloneSetup(chatResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

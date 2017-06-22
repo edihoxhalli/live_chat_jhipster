@@ -3,8 +3,8 @@
         <span jhiTranslate="chatApp.chat.home.title">Chats</span>
         <button class="btn btn-primary float-right create-chat-my-suffix" [routerLink]="['/', { outlets: { popup: ['chat-my-suffix-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span  jhiTranslate="chatApp.chat.home.createLabel">
-            Create new Chat
+            <span >
+            Start a new Chat
             </span>
         </button>
     </h2>
@@ -17,9 +17,9 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="chatApp.chat.creationtime">Creationtime</span></th>
-            <th><span jhiTranslate="chatApp.chat.user1">User 1</span></th>
-            <th><span jhiTranslate="chatApp.chat.user2">User 2</span></th>
+            <th><span >Chat Start Time</span></th>
+            <th><span >Initiating user</span></th>
+            <th><span >Receiving user</span></th>
             <th></th>
             </tr>
             </thead>
@@ -39,7 +39,7 @@
                                 [routerLink]="['../chat-box', chat.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
-                            <span class="hidden-md-down" jhiTranslate="entity.action.view">Open Chat</span>
+                            <span class="hidden-md-down">Open Chat</span>
                         </button>
                         <!--<button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'chat-my-suffix/'+ chat.id + '/edit'} }]"

@@ -87,6 +87,18 @@ public class ChatMessageResource {
         log.debug("REST request to get all ChatMessages");
         return chatmessageService.findAll();
     }
+    
+    /**
+     * GET  /chatmessages : get all the chatmessages.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of chatmessages in body
+     */
+    @GetMapping("/chatmessages-by-chat/{id}")
+    @Timed
+    public List<ChatMessageDTO> getAllChatMessagesByIdChat(@PathVariable Long id) {
+        log.debug("REST request to get all ChatMessages");
+        return chatmessageService.findAllByChat(id);
+    }
 
     /**
      * GET  /chatmessages/:id : get the "id" chatmessage.

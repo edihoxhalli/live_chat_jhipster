@@ -6,9 +6,10 @@ import { JhiEventManager  } from 'ng-jhipster';
 import { ChatMySuffix } from './chat-my-suffix.model';
 import { ChatMySuffixService } from './chat-my-suffix.service';
 import {AfterViewInit} from '@angular/core';    
-import {ElementRef, ViewChild} from '@angular/core';
-
-
+import {QueryList, ElementRef, ViewChild} from '@angular/core';
+import { ChatMessageMySuffixService } from '../chatmessage/chatmessage-my-suffix.service';
+import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
+import { ChatMessageMySuffix } from '../chatmessage/chatmessage-my-suffix.model';
 
 @Component({
     selector: 'chat-box-detail',
@@ -17,10 +18,10 @@ import {ElementRef, ViewChild} from '@angular/core';
 })
 export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
 
-    @ViewChild('messageBox') message_box:ElementRef;
-    
-    @ViewChild('myname') myname:ElementRef
+    @ViewChild('messageBox', {read: ElementRef}) messageBox:ElementRef;
 
+    chatmessages: ChatMessageMySuffix[];
+    currentMessage:string = "";
     chat: ChatMySuffix;
     private subscription: Subscription;
     private eventSubscriber: Subscription;
@@ -28,22 +29,26 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
     constructor(
         private eventManager: JhiEventManager,
         private chatService: ChatMySuffixService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private chatmessageService: ChatMessageMySuffixService,
     ) {
     }
 
     ngAfterViewInit() {
-       //Copy in all the js code from the script.js. Typescript will complain but it works just fine
-       //document.getElementById('message_box');
-       console.log(this.myname);
-        console.log(this.message_box);
-        console.log(this.message_box.nativeElement);
-        this.message_box.nativeElement.scrollTop =this.message_box.nativeElement.scrollHeight ;
+        setTimeout(function() {
+            let messagesDiv = document.getElementById('messageBox');
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }, 1000);
+}
+
+    sendMessage(){
+        
     }
 
     ngOnInit() {
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
+            
         });
         
         
@@ -51,9 +56,19 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
         this.registerChangeInChats();
     }
 
+    loadMessages() {
+        this.chatmessageService.queryByChat(this.chat.id).subscribe(
+            (res: ResponseWrapper) => {
+                this.chatmessages = res.json;
+                console.log(this.chatmessages);
+            }
+        );
+    }
+
     load(id) {
         this.chatService.find(id).subscribe((chat) => {
             this.chat = chat;
+            this.loadMessages();
         });
     }
     previousState() {
@@ -71,4 +86,5 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
             (response) => this.load(this.chat.id)
         );
     }
+    
 }

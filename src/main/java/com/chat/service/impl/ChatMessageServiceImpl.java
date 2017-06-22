@@ -59,6 +59,20 @@ public class ChatMessageServiceImpl implements ChatMessageService{
             .map(chatmessageMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
+    
+    /**
+     *  Get all the chatmessages of a chat.
+     *
+     *  @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<ChatMessageDTO> findAllByChat(Long chatId) {
+        log.debug("Request to get all ChatMessages");
+        return chatmessageRepository.findByChatId(chatId).stream()
+            .map(chatmessageMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 
     /**
      *  Get one chatmessage by id.

@@ -45,6 +45,13 @@ export class ChatMessageMySuffixService {
             .map((res: Response) => this.convertResponse(res));
     }
 
+    queryByChat(id:number): Observable<ResponseWrapper> {
+        const options = createRequestOption();
+        let url = 'api/chatmessages-by-chat';
+        return this.http.get(`${url}/${id}`, options)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }

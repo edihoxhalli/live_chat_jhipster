@@ -1,7 +1,7 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
 
     <div class="modal-header">
-        <h4 class="modal-title" id="myChatLabel" jhiTranslate="chatApp.chat.home.createOrEditLabel">Create or edit a Chat</h4>
+        <h4 class="modal-title" id="myChatLabel">Select the user you want to chat with</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 (click)="clear()">&times;</button>
     </div>
@@ -12,7 +12,7 @@
             <input type="text" class="form-control" id="id" name="id"
                    [(ngModel)]="chat.id" readonly />
         </div>
-        <div class="form-group">
+        <!--<div class="form-group">
             <label class="form-control-label" jhiTranslate="chatApp.chat.creationtime" for="field_creationtime">Creationtime</label>
             <div class="d-flex">
                 <input id="field_creationtime" type="datetime-local" class="form-control" name="creationtime" [(ngModel)]="chat.creationtime"
@@ -26,9 +26,9 @@
                 <option [ngValue]="null"></option>
                 <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
             </select>
-        </div>
+        </div>-->
         <div class="form-group">
-            <label jhiTranslate="chatApp.chat.user2" for="field_user2">User 2</label>
+            <label for="field_user2">Select User</label>
             <select class="form-control" id="field_user2" name="user2" [(ngModel)]="chat.user2Id" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>

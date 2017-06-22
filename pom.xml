@@ -16,6 +16,7 @@
     <name>Chat</name>
 
     <properties>
+    	<start-class>com.chat.ChatApp</start-class>
         <argLine>-Djava.security.egd=file:/dev/./urandom -Xmx256m</argLine>
         <assertj.version>3.6.2</assertj.version>
         <awaitility.version>2.0.0</awaitility.version>

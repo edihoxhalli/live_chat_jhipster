@@ -1,21 +1,21 @@
-#message_box{
+#messageBox{
     max-height: 400px;
     overflow: auto;
 }
 
-#message_box::-webkit-scrollbar-track
+#messageBox::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	background-color: #F5F5F5;
 }
 
-#message_box::-webkit-scrollbar
+#messageBox::-webkit-scrollbar
 {
 	width: 6px;
 	background-color: #F5F5F5;
 }
 
-#message_box::-webkit-scrollbar-thumb
+#messageBox::-webkit-scrollbar-thumb
 {
 	background-color: #000000;
 }

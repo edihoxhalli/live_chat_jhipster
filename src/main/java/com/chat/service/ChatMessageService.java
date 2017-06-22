@@ -24,6 +24,12 @@ public interface ChatMessageService {
     List<ChatMessageDTO> findAll();
 
     /**
+     *  Get all the chatmessages of a chat.
+     *
+     *  @return the list of entities
+     */
+    List<ChatMessageDTO> findAllByChat(Long chatId);
+    /**
      *  Get the "id" chatmessage.
      *
      *  @param id the id of the entity

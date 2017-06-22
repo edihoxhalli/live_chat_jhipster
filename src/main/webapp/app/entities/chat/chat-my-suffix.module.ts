@@ -19,6 +19,7 @@ import {
     ChatBox,
     ChatBoxDetail
 } from './';
+import { FormsModule } from '@angular/forms';
 
 const ENTITY_STATES = [
     ...chatRoute,
@@ -28,6 +29,7 @@ const ENTITY_STATES = [
 
 @NgModule({
     imports: [
+        FormsModule,
         ChatSharedModule,
         ChatAdminModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })

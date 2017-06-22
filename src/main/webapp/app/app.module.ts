@@ -25,9 +25,10 @@ import {
     ActiveMenuDirective,
     ErrorComponent
 } from './layouts';
-
+import { FormsModule } from '@angular/forms';
 @NgModule({
     imports: [
+        FormsModule,
         BrowserModule,
         LayoutRoutingModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
