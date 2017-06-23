@@ -25,7 +25,7 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
     chat: ChatMySuffix;
     private subscription: Subscription;
     private eventSubscriber: Subscription;
-
+    
     constructor(
         private eventManager: JhiEventManager,
         private chatService: ChatMySuffixService,
@@ -35,14 +35,27 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngAfterViewInit() {
+        this.scrollDown();
+    }
+
+    scrollDown(){
         setTimeout(function() {
-            let messagesDiv = document.getElementById('messageBox');
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }, 1000);
-}
+                let messagesDiv = document.getElementById('messageBox');
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }, 100);
+    }
 
     sendMessage(){
-        
+        let chatmessage: ChatMessageMySuffix = new ChatMessageMySuffix();
+        chatmessage.story = this.currentMessage;
+        chatmessage.chatId = this.chat.id;
+        this.chatmessageService.send(chatmessage).subscribe(
+            (savedMessage) => {
+                this.chatmessages.push(savedMessage);
+                this.currentMessage="";
+                this.scrollDown();
+            }
+        );
     }
 
     ngOnInit() {
@@ -60,7 +73,7 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
         this.chatmessageService.queryByChat(this.chat.id).subscribe(
             (res: ResponseWrapper) => {
                 this.chatmessages = res.json;
-                console.log(this.chatmessages);
+                this.scrollDown();
             }
         );
     }

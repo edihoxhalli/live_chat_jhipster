@@ -1,7 +1,10 @@
 package com.chat.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.chat.domain.User;
+import com.chat.security.SecurityUtils;
 import com.chat.service.ChatMessageService;
+import com.chat.service.UserService;
 import com.chat.web.rest.util.HeaderUtil;
 import com.chat.service.dto.ChatMessageDTO;
 import com.chat.service.dto.ChatMessageDTO;
@@ -13,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,9 +32,12 @@ public class ChatMessageResource {
     private static final String ENTITY_NAME = "chatmessage";
 
     private final ChatMessageService chatmessageService;
+    
+    private final UserService userService;
 
-    public ChatMessageResource(ChatMessageService chatmessageService) {
+    public ChatMessageResource(ChatMessageService chatmessageService, UserService userService) {
         this.chatmessageService = chatmessageService;
+        this.userService = userService;
     }
 
     /**
@@ -54,6 +60,33 @@ public class ChatMessageResource {
             .body(result);
     }
 
+    /**
+     * POST  /chatmessages : Create a new chatmessage.
+     *
+     * @param chatmessageDTO the chatmessageDTO to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new chatmessageDTO, or with status 400 (Bad Request) if the chatmessage has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/chatmessages-send")
+    @Timed
+    public ResponseEntity<ChatMessageDTO> sendChatMessage(@RequestBody ChatMessageDTO chatmessageDTO) throws URISyntaxException {
+        log.debug("REST request to save ChatMessage : {}", chatmessageDTO);
+        if (chatmessageDTO.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new chatmessage cannot already have an ID")).body(null);
+        }
+        chatmessageDTO.setSenttime(ZonedDateTime.now());
+        String currentUserLogin = SecurityUtils.getCurrentUserLogin();
+        User currentlyLoggedInUser =  userService.getUserWithAuthoritiesByLogin(currentUserLogin).get();
+        chatmessageDTO.setUserId(currentlyLoggedInUser.getId());
+        chatmessageDTO.setUserLogin(currentlyLoggedInUser.getLogin());
+        ChatMessageDTO result = chatmessageService.save(chatmessageDTO);
+        if(result.getUserLogin() == null)
+        	result.setUserLogin(currentlyLoggedInUser.getLogin());
+        return ResponseEntity.created(new URI("/api/chatmessages-send/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+    
     /**
      * PUT  /chatmessages : Updates an existing chatmessage.
      *

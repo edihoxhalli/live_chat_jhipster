@@ -22,6 +22,16 @@ export class ChatMessageMySuffixService {
         });
     }
 
+    send(chatmessage: ChatMessageMySuffix): Observable<ChatMessageMySuffix> {
+        const copy = this.convert(chatmessage);
+        let url = 'api/chatmessages-send';
+        return this.http.post(url, copy).map((res: Response) => {
+            const jsonResponse = res.json();
+            this.convertItemFromServer(jsonResponse);
+            return jsonResponse;
+        });
+    }
+
     update(chatmessage: ChatMessageMySuffix): Observable<ChatMessageMySuffix> {
         const copy = this.convert(chatmessage);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {

@@ -19,7 +19,7 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage,Long> {
     @Query("select chat_message from ChatMessage chat_message where chat_message.user.login = ?#{principal.username}")
     List<ChatMessage> findByUserIsCurrentUser();
 
-    @Query("select chat_message from ChatMessage chat_message where chat_message.chat.id = :#{id} order by chat_message.senttime asc")
+    @Query("select chat_message from ChatMessage chat_message where chat_message.chat.id = :id order by chat_message.senttime asc")
     List<ChatMessage> findByChatId(@Param("id") Long id);
     
 }
