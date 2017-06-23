@@ -17,6 +17,8 @@ import {
     JhiLoginModalComponent
 } from './';
 
+import { ChatWSService } from './chatws/chatws.service';
+
 @NgModule({
     imports: [
         ChatSharedLibsModule,
@@ -34,6 +36,7 @@ import {
         Principal,
         CSRFService,
         JhiTrackerService,
+        ChatWSService,
         AuthServerProvider,
         UserService,
         DatePipe

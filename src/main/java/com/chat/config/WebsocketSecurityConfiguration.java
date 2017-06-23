@@ -2,7 +2,9 @@ package com.chat.config;
 
 import com.chat.security.AuthoritiesConstants;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageType;
+import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
 
@@ -14,6 +16,8 @@ public class WebsocketSecurityConfiguration extends AbstractSecurityWebSocketMes
         messages
             .nullDestMatcher().authenticated()
             .simpDestMatchers("/topic/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
+            .simpDestMatchers("/chat/update-window/**").authenticated()
+            .simpDestMatchers("/chat/new-message/**").authenticated()
             // matches any destination that starts with /topic/
             // (i.e. cannot send messages directly to /topic/)
             // (i.e. cannot subscribe to /topic/messages/* to get messages sent to

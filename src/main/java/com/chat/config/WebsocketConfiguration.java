@@ -41,7 +41,7 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
+        config.enableSimpleBroker("/topic", "/chat");
     }
 
     @Override
@@ -52,6 +52,11 @@ public class WebsocketConfiguration extends AbstractWebSocketMessageBrokerConfig
             .setAllowedOrigins(allowedOrigins)
             .withSockJS()
             .setInterceptors(httpSessionHandshakeInterceptor());
+        registry.addEndpoint("/websocket/chat")
+	        .setHandshakeHandler(defaultHandshakeHandler())
+	        .setAllowedOrigins(allowedOrigins)
+	        .withSockJS()
+	        .setInterceptors(httpSessionHandshakeInterceptor());
     }
 
     @Bean

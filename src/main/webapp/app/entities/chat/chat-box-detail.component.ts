@@ -10,7 +10,7 @@ import {QueryList, ElementRef, ViewChild} from '@angular/core';
 import { ChatMessageMySuffixService } from '../chatmessage/chatmessage-my-suffix.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { ChatMessageMySuffix } from '../chatmessage/chatmessage-my-suffix.model';
-
+import {ChatWSService} from '../../shared/chatws/chatws.service';
 @Component({
     selector: 'chat-box-detail',
     templateUrl: './chat-box-detail.component.html',
@@ -31,6 +31,7 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
         private chatService: ChatMySuffixService,
         private route: ActivatedRoute,
         private chatmessageService: ChatMessageMySuffixService,
+        private chatWSService: ChatWSService,
     ) {
     }
 
@@ -52,6 +53,7 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
         this.chatmessageService.send(chatmessage).subscribe(
             (savedMessage) => {
                 this.chatmessages.push(savedMessage);
+                this.chatWSService.sendActivity(savedMessage);
                 this.currentMessage="";
                 this.scrollDown();
             }
@@ -61,7 +63,6 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
     ngOnInit() {
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
-            
         });
         
         
@@ -81,6 +82,11 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
     load(id) {
         this.chatService.find(id).subscribe((chat) => {
             this.chat = chat;
+            this.chatWSService.connect();
+            this.chatWSService.subscribe(this.chat.id);
+            this.chatWSService.receive().subscribe((activity) => {
+                console.log(activity);//this.showActivity(activity);
+            });
             this.loadMessages();
         });
     }
