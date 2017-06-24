@@ -1,6 +1,15 @@
 #messageBox{
-    max-height: 400px;
+    height: 500px;
+    border: 1px solid rgba(10, 152, 106, 0.17);
     overflow: auto;
+    margin-bottom: 30px;
+    padding: 10px 5px;
+}
+
+#sendButton{
+    margin: 15px auto;
+    display: block;
+    min-width: 50%;
 }
 
 #messageBox::-webkit-scrollbar-track
@@ -20,31 +29,56 @@
 	background-color: #000000;
 }
 
+.other_user, .current_user {
+    position: relative;
+    max-width: 48%;
+    display: inline-block;
+}
+.current_user{
+    background: #4e8a90;
+    padding: 5px;
+    border-radius: 10px 0px 10px 10px;
+    color: white;
+}
 .other_user {
     background: #854e90;
     padding: 5px;
     border-radius: 0px 10px 10px 10px;
-    max-width: 6%;
     color: white;
 }
 
 
-.tooltip .tooltiptext {
+.tooltiptext {
     visibility: hidden;
-    width: 120px;
+    width: 150px;
     background-color: black;
     color: #fff;
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
-    
-    /* Position the tooltip */
     position: absolute;
     z-index: 1;
-    top: -5px;
+    top: 0px;
+}
+
+.other_user .tooltiptext {
     left: 105%;
 }
 
-.tooltip:hover .tooltiptext {
+.current_user .tooltiptext {
+    right: 105%;
+}
+
+.current_user:hover .tooltiptext, .other_user:hover .tooltiptext {
     visibility: visible;
+}
+
+.messageRow{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.pull-right {
+    float: right;
+    text-align: right;
 }

@@ -72,7 +72,6 @@ export class ChatWSService {
     getCurrentAccount(){
         this.principal.identity().then((account) => {
             this.currentAccount = account;
-            return this.currentAccount;
         });
     }
 

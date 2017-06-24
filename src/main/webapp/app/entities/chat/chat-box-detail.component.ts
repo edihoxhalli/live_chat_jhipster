@@ -28,15 +28,16 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
     private receiveSubscription: Subscription;
     private eventSubscriber: Subscription;
     currentAccount: any;
-    notify:boolean = false;
-    notificationUser = '';
-    notificationChat:number;
+    // notify:boolean = false;
+    // notificationUser = '';
+    // notificationChat:number;
     constructor(
         private eventManager: JhiEventManager,
         private chatService: ChatMySuffixService,
         private route: ActivatedRoute,
         private chatmessageService: ChatMessageMySuffixService,
         private chatWSService: ChatWSService,
+        private principal: Principal
     ) {
     }
 
@@ -70,9 +71,6 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
-        
-        
-
         this.registerChangeInChats();
     }
 
@@ -90,19 +88,21 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
             this.chat = chat;
             this.chatWSService.connect();
             this.currentAccount = this.chatWSService.getCurrentAccount();
-            console.log(this.chatWSService.subscriber);
-            if(this.chatWSService.subscriber == null){
-                this.chatWSService.subscribe(this.chat.id);
-            }
+            
+            this.principal.identity().then((account) => {
+                this.currentAccount = account;
+            });
+            this.chatWSService.subscribe(this.chat.id);
             this.receiveSubscription = this.chatWSService.receive().subscribe((message) => {
                 if(message.chatId == this.chat.id){
                     this.chatmessages.push(message);
                     this.scrollDown();
-                }else{
-                    this.notify = true;
-                    this.notificationUser = message.userLogin;
-                    this.notificationChat = message.chatId;
                 }
+                // else{
+                //     this.notify = true;
+                //     this.notificationUser = message.userLogin;
+                //     this.notificationChat = message.chatId;
+                // }
             });
             this.loadMessages();
         });
@@ -114,6 +114,7 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
     ngOnDestroy() {
         this.subscription.unsubscribe();
         this.receiveSubscription.unsubscribe();
+        this.chatWSService.unsubscribe();
         if(this.sendSubscription)
             this.sendSubscription.unsubscribe();
         this.eventManager.destroy(this.eventSubscriber);

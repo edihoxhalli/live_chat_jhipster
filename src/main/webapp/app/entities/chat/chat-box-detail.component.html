@@ -1,24 +1,30 @@
 
 <div *ngIf="chat">
     <h2><span jhiTranslate="chatApp.chat.detail.title">Chat</span> {{chat.id}}</h2>
-     <button type="submit" *ngIf="notify"
+     <!--<button type="submit" *ngIf="notify"
                                 [routerLink]="['../../chat-box', notificationChat ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span>New message from {{notificationUser}}</span>
-                        </button>
+                        </button>-->
     <hr>
     <jhi-alert-error></jhi-alert-error> 
     <div  id="messageBox" #messageBox class="messageBox">
-        <p *ngFor="let message of chatmessages">
-            <!--*ngIf="currentAccount.login != message.userLogin"
-            *ngIf="currentAccount.login == message.userLogin"-->
-            <span  class="current_user tooltip pull-right">{{message.userLogin+' : '+message.story}}<span class="tooltiptext">{{message.senttime}}</span></span>
-            <span  class="other_user tooltip pull-left">{{message.userLogin+' : '+message.story}}<span class="tooltiptext">{{message.senttime}}</span></span>
+        <p class="row messageRow" *ngFor="let message of chatmessages">
+            <span  class="pull-right col-sm-12" *ngIf="currentAccount?.login == message.userLogin" >
+                <span class="current_user">{{message.userLogin+' : '+message.story}}
+                    <span class="tooltiptext">{{message.senttime | date: 'dd/MM/yyyy - HH:MM:ss'}}</span>
+                </span>
+            </span>
+            <span  class=" pull-left col-sm-12" *ngIf="currentAccount?.login != message.userLogin">
+                <span class="other_user">{{message.userLogin+' : '+message.story}}
+                    <span class="tooltiptext">{{message.senttime | date: 'dd/MM/yyyy - HH:MM:ss'}}</span>
+                </span>
+            </span>
         </p>
     </div>
     <input type="text" placeholder="Enter message..." class="form-control" id="message" (keyup.enter)="sendMessage()"  [(ngModel)]="currentMessage" />
-    <button type="button"
+    <button type="button" id="sendButton"
             (click) = "sendMessage();"
             class="btn btn-primary">
         <span class="fa fa-pencil"></span>&nbsp;<span> Send</span>
