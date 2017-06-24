@@ -60,9 +60,7 @@ public class ActivityService implements ApplicationListener<SessionDisconnectEve
     		recepient = currentChat.getUser2Login();
     	else
     		recepient = currentChat.getUser1Login();
-    	System.out.println("Sending Sending "+ recepient +  outputUrl);
     	this.messagingTemplate.convertAndSendToUser(recepient, outputUrl, chatmessageDTO);
-    	this.messagingTemplate.convertAndSend(outputUrl, chatmessageDTO);
     }
 
 
