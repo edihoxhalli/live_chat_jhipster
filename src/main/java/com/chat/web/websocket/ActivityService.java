@@ -47,16 +47,11 @@ public class ActivityService implements ApplicationListener<SessionDisconnectEve
     }
     
     @SubscribeMapping("/chat/update-window")
-    //@SendTo("/chat/new-message/{id}")
     public void updateChat(@Payload ChatMessageDTO chatmessageDTO, StompHeaderAccessor stompHeaderAccessor, Principal principal) {
-    	System.out.println("enter enter");
-    	//ChatMessageDTO chatmessageDTO = new ChatMessageDTO(); 
-    	chatmessageDTO.setStory("default story");
-    	System.out.println(chatmessageDTO);
     	this.sendMessage(chatmessageDTO, chatmessageDTO.getChatId());
     }
-    
-    //@Scheduled(fixedDelay=1000)
+
+
     public void sendMessage(ChatMessageDTO chatmessageDTO, Long chatId) {
     	String recepient = "";
     	String outputUrl = "/chat/new-message/"+chatId;

@@ -24,8 +24,12 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
     currentMessage:string = "";
     chat: ChatMySuffix;
     private subscription: Subscription;
+    private sendSubscription: Subscription;
+    private receiveSubscription: Subscription;
     private eventSubscriber: Subscription;
-    
+    notify:boolean = false;
+    notificationUser = '';
+    notificationChat:number;
     constructor(
         private eventManager: JhiEventManager,
         private chatService: ChatMySuffixService,
@@ -42,7 +46,8 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
     scrollDown(){
         setTimeout(function() {
                 let messagesDiv = document.getElementById('messageBox');
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                if(messagesDiv)
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }, 100);
     }
 
@@ -50,7 +55,7 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
         let chatmessage: ChatMessageMySuffix = new ChatMessageMySuffix();
         chatmessage.story = this.currentMessage;
         chatmessage.chatId = this.chat.id;
-        this.chatmessageService.send(chatmessage).subscribe(
+        this.sendSubscription = this.chatmessageService.send(chatmessage).subscribe(
             (savedMessage) => {
                 this.chatmessages.push(savedMessage);
                 this.chatWSService.sendActivity(savedMessage);
@@ -83,9 +88,20 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
         this.chatService.find(id).subscribe((chat) => {
             this.chat = chat;
             this.chatWSService.connect();
-            this.chatWSService.subscribe(this.chat.id);
-            this.chatWSService.receive().subscribe((activity) => {
-                console.log(activity);//this.showActivity(activity);
+            this.chatWSService.getCurrentAccount();
+            console.log(this.chatWSService.subscriber);
+            if(this.chatWSService.subscriber == null){
+                this.chatWSService.subscribe(this.chat.id);
+            }
+            this.receiveSubscription = this.chatWSService.receive().subscribe((message) => {
+                if(message.chatId == this.chat.id){
+                    this.chatmessages.push(message);
+                    this.scrollDown();
+                }else{
+                    this.notify = true;
+                    this.notificationUser = message.userLogin;
+                    this.notificationChat = message.chatId;
+                }
             });
             this.loadMessages();
         });
@@ -96,6 +112,9 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
+        this.receiveSubscription.unsubscribe();
+        if(this.sendSubscription)
+            this.sendSubscription.unsubscribe();
         this.eventManager.destroy(this.eventSubscriber);
     }
 

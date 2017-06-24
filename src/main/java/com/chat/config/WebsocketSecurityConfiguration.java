@@ -18,6 +18,7 @@ public class WebsocketSecurityConfiguration extends AbstractSecurityWebSocketMes
             .simpDestMatchers("/topic/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
             .simpDestMatchers("/chat/update-window/**").authenticated()
             .simpDestMatchers("/chat/new-message/**").authenticated()
+            .simpDestMatchers("/user/*/chat/new-message/**").authenticated()
             // matches any destination that starts with /topic/
             // (i.e. cannot send messages directly to /topic/)
             // (i.e. cannot subscribe to /topic/messages/* to get messages sent to

@@ -1,10 +1,11 @@
 import { Injectable, Inject } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Observable, Observer, Subscription } from 'rxjs/Rx';
 
 import { CSRFService } from '../auth/csrf.service';
 import { WindowRef } from '../tracker/window.service';
 import { AuthServerProvider } from '../auth/auth-jwt.service';
+import { Principal } from '../';
 
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'webstomp-client';
@@ -19,21 +20,25 @@ export class ChatWSService {
     listenerObserver: Observer<any>;
     alreadyConnectedOnce = false;
     private subscription: Subscription;
+    currentAccount: any;
 
     constructor(
         private router: Router,
         private authServerProvider: AuthServerProvider,
         private $window: WindowRef,
-        private csrfService: CSRFService
+        private csrfService: CSRFService,
+        private principal: Principal
     ) {
         this.connection = this.createConnection();
         this.listener = this.createListener();
     }
+    
 
     connect() {
         if (this.connectedPromise === null) {
           this.connection = this.createConnection();
         }
+        
         // building absolute path so that websocket doesn't fail when deploying with a context path
         const loc = this.$window.nativeWindow.location;
         let url;
@@ -51,12 +56,22 @@ export class ChatWSService {
             //this.sendActivity();
             if (!this.alreadyConnectedOnce) {
                 this.subscription = this.router.events.subscribe((event) => {
-                  if (event instanceof NavigationEnd) {
+                  if (event instanceof NavigationStart) {
+                    if(event.url === '/logout'){
+                        this.unsubscribe();
+                        this.subscriber = null;
+                    }
                    // this.sendActivity();
                   }
                 });
                 this.alreadyConnectedOnce = true;
             }
+        });
+    }
+
+    getCurrentAccount(){
+        this.principal.identity().then((account) => {
+            this.currentAccount = account;
         });
     }
 
@@ -90,11 +105,8 @@ export class ChatWSService {
     }
 
     subscribe(chatId) {
-        console.log("outside subscribe");
         this.connection.then(() => {
-            this.subscriber = this.stompClient.subscribe("/chat/new-message/"+chatId, (data) => {
-                console.log(data);
-                console.log("inside subscribe");
+            this.subscriber = this.stompClient.subscribe("/user/"+this.currentAccount.login+"/chat/new-message/"+chatId, (data) => {
                 this.listenerObserver.next(JSON.parse(data.body));
             });
         });

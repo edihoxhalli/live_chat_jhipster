@@ -1,6 +1,12 @@
 
 <div *ngIf="chat">
     <h2><span jhiTranslate="chatApp.chat.detail.title">Chat</span> {{chat.id}}</h2>
+     <button type="submit" *ngIf="notify"
+                                [routerLink]="['../../chat-box', notificationChat ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span>New message from {{notificationUser}}</span>
+                        </button>
     <hr>
     <jhi-alert-error></jhi-alert-error> 
     <div  id="messageBox" #messageBox class="messageBox">
