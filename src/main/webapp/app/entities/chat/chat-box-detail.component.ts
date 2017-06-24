@@ -27,6 +27,7 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
     private sendSubscription: Subscription;
     private receiveSubscription: Subscription;
     private eventSubscriber: Subscription;
+    currentAccount: any;
     notify:boolean = false;
     notificationUser = '';
     notificationChat:number;
@@ -88,7 +89,7 @@ export class ChatBoxDetail implements OnInit, OnDestroy, AfterViewInit {
         this.chatService.find(id).subscribe((chat) => {
             this.chat = chat;
             this.chatWSService.connect();
-            this.chatWSService.getCurrentAccount();
+            this.currentAccount = this.chatWSService.getCurrentAccount();
             console.log(this.chatWSService.subscriber);
             if(this.chatWSService.subscriber == null){
                 this.chatWSService.subscribe(this.chat.id);

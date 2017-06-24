@@ -10,7 +10,12 @@
     <hr>
     <jhi-alert-error></jhi-alert-error> 
     <div  id="messageBox" #messageBox class="messageBox">
-        <p *ngFor="let message of chatmessages">{{message.userLogin+' : '+message.story}}</p>
+        <p *ngFor="let message of chatmessages">
+            <!--*ngIf="currentAccount.login != message.userLogin"
+            *ngIf="currentAccount.login == message.userLogin"-->
+            <span  class="current_user tooltip pull-right">{{message.userLogin+' : '+message.story}}<span class="tooltiptext">{{message.senttime}}</span></span>
+            <span  class="other_user tooltip pull-left">{{message.userLogin+' : '+message.story}}<span class="tooltiptext">{{message.senttime}}</span></span>
+        </p>
     </div>
     <input type="text" placeholder="Enter message..." class="form-control" id="message" (keyup.enter)="sendMessage()"  [(ngModel)]="currentMessage" />
     <button type="button"
